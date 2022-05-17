@@ -48,12 +48,11 @@ class StartFragment : Fragment() {
         val navMenuHeader = binding.nvMenu.getHeaderView(0)
         val name = navMenuHeader.findViewById<TextView>(R.id.tvUser)
         if (mAuth.currentUser != null) {
-            FirebaseUtils().fireStoreDatabase.collection("users").get()
+            FirebaseUtils().fireStoreDatabase.collection("users")
+                .document(mAuth.currentUser!!.uid).get()
                 .addOnSuccessListener { querySnapshot ->
-                    querySnapshot.forEach { document ->
-                        dataFirstName = document.data.get("firstName").toString()
-                        dataLastName = document.data.get("lastName").toString()
-                    }
+                    dataFirstName = querySnapshot.data?.get("firstName").toString()
+                    dataLastName = querySnapshot.data?.get("lastName").toString()
                     name.text = "$dataFirstName $dataLastName"
                 }
         } else {

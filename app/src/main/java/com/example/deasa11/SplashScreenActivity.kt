@@ -28,6 +28,7 @@ class SplashScreenActivity : AppCompatActivity() {
             if (i == 48) {
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
+                finish()
             }
             i++
         }
